@@ -1,0 +1,12 @@
+Create a server.js file
+- require Express
+- set up a PORT
+- ADD the middleware for post routes
+- add the middleware for static routes
+- import the routes 
+- listen to the port
+
+Create the routes Folder
+- add routes for HTML 
+- Add routes for API 
+- Require these routes in server.js
