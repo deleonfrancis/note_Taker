@@ -1,10 +1,6 @@
 // Require Express
 const express = require("express");
 
-// Require Routes
-const apiRoutes = require("./routes/apiRoutes");
-const htmlRoutes = require("./routes/htmlRoutes");
-
 // app for express
 const app = express();
 
@@ -12,13 +8,18 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Setup the Express app to handle data parsing
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 // Eliminate public folder from running in express.d
 app.use(express.static("public"));
 
+// Require Routes
+require("./routes/apiRoutes")(app);
+require("./routes/htmlRoutes")(app);
+
 // Port Listener
 app.listen(PORT, function (req, res) {
-  console.log("App listening on PORT: " + PORT);
+  console.log("Server is listening on PORT: " + PORT);
 });
