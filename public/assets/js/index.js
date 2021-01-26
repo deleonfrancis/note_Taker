@@ -1,3 +1,7 @@
+const { JSDOM } = require("jsdom");
+const { window } = new JSDOM("");
+const $ = require("jquery")(window);
+
 const $noteTitle = $(".note-title");
 const $noteText = $(".note-textarea");
 const $saveNoteBtn = $(".save-note");
