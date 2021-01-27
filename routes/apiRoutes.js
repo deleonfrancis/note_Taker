@@ -1,3 +1,4 @@
+const { json } = require("express");
 const fs = require("fs");
 const path = require("path");
 
@@ -17,7 +18,7 @@ module.exports = function (app) {
       var notes = JSON.parse(data)
       console.log(notes); // Update noteSection with notes from the file.
       req.body.id = Math.floor(Math.random()*1000)+1; // random number for the id
-      notes.push(req.body); // Add new note to the array. 
+      notes.push(req.body); // Adds the new note to the array. 
       
       fs.writeFile(path.join(__dirname, "../db/db.json"), JSON.stringify(notes), function (err) {
         if (err) throw err;
@@ -29,23 +30,24 @@ module.exports = function (app) {
   });
   });
 
-  // app.get("/api/notes/:id", function (req, res) {
-  //   res.json(noteSection[req.params.id]);
-  // });
-
-  app.delete("/api/notes/:id", function (req, res) {
-    console.log(req.params.id);
-    // noteSection.splice(req.params.id, 1);
-    // updateNotes();
-    console.log("Note " + req.params.id + " is deleted.");
-    fs.readFile(data);
-  });  
+  app.delete("/api/notes/:id", (req, res) => {
+    fs.readFile(path.join(__dirname, "../db/db.json"), "utf-8", function (err, data) {
+      if (err) {
+        console.log(err);
+      } 
+      else {
+        objArray = JSON.parse(data)
+        const id = req.params.id;
+        const index = objArray.findIndex(i => i.id == id);
+        objArray.splice(index, 1);
+        res.json(objArray)
+        
+        fs.writeFile(path.join(__dirname, "../db/db.json"), JSON.stringify(objArray), "utf-8", function (err) {
+          if (err) {console.log(err);
+          return
+        }
+      });
+    }
+  });      
+});
 }
-
-
-  function updateNotes() {
-    fs.writeFile("./db/db.json", JSON.stringify(noteSection, "\t"), (err) => {
-      if (err) throw err;
-      return true;
-    });
-  }

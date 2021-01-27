@@ -5,7 +5,7 @@ const express = require("express");
 const app = express();
 
 // Setup port on 3000
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 // Setup the Express app to handle data parsing
 app.use(express.json());
